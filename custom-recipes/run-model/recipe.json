@@ -1,0 +1,143 @@
+// This file is the descriptor for the Custom code recipe run-model
+{
+    // Meta data for display purposes
+    "meta": {
+        // label: name of the recipe as displayed, should be short
+        "label": "Markov Model",
+        // description: longer string to help end users understand what this recipe does
+        "description": "Runs a Markov Model for Channel Attribution",
+        // icon: must be one of the FontAwesome 3.2.1 icons, complete list here at https://fontawesome.com/v3.2.1/icons/
+        "icon": "icon-code-fork"
+    },
+
+    "kind": "PYTHON",
+    
+
+    // Inputs and outputs are defined by roles. In the recipe's I/O tab, the user can associate one
+    // or more dataset to each input and output role.
+
+    // The "arity" field indicates whether the user can associate several datasets to the role ('NARY')
+    // or at most one ('UNARY'). The "required" field indicates whether the user is allowed to
+    // associate no dataset with the role.
+
+    "inputRoles": [
+        {
+            "name": "input_dataset",
+            "label": "Input Dataset",
+            "description": "Input data with a column for channels, a column for outcomes and a column to identify agents",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+
+    "outputRoles": [
+        {
+            "name": "transition_matrix",
+            "label": "Transition Matrix",
+            "description": "Matrix of transition probabilties",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        },
+        {
+            "name": "channel_attributes",
+            "label": "Channel Attributes",
+            "description": "Dataset of attributes for each channel",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+        // ...
+    ],
+
+    /* The field "params" holds a list of all the params
+       for wich the user will be prompted for values in the Settings tab of the recipe.
+
+       The available parameter types include:
+       STRING, STRINGS, INT, DOUBLE, BOOLEAN, SELECT, MULTISELECT, MAP, TEXTAREA, PRESET, COLUMN, COLUMNS
+
+       For the full list and for more details, see the documentation: https://doc.dataiku.com/dss/latest/plugins/reference/params.html
+    */
+
+
+    "params": [
+        {
+            "name": "event_feature",
+            "label": "Channel Column",
+            "type": "COLUMN",
+            "columnRole": "input_dataset",
+            "description": "Column to identify channels",
+            "mandatory": true
+        },
+        {
+            "name": "group_feature",
+            "label": "Group Column",
+            "type": "COLUMN",
+            "columnRole": "input_dataset",
+            "description": "Column to identify individual agents",
+            "mandatory": true
+        },
+        {
+            "name": "order_feature",
+            "label": "Ordering Column",
+            "type": "COLUMN",
+            "columnRole": "input_dataset",
+            "description": "Column to identify the order of events",
+            "mandatory": true
+        },
+        {
+            "name": "conversion_feature",
+            "label": "Conversion Column",
+            "type": "COLUMN",
+            "columnRole": "input_dataset",
+            "description": "Column to identify if a conversion occured",
+            "mandatory": true
+        },
+        {
+            "name": "conversion_event_id",
+            "label": "Conversation Identifier",
+            "type": "STRING",
+            "description": "The label for a conversation within the Conversion Column",
+            "mandatory": true
+        },
+        {
+            "name": "k_order",
+            "label":"K Order",
+            "description": "The memory of the Markov Chain (How many events are the outcomes in 'channel to' outcome)",
+            "type": "INT",
+            "defaultValue": 1
+        },
+        {
+            "name": "n_simulations",
+            "label": "Number of Simulations",
+            "description": "Number of Markov Chain Simulations",
+            "type": "INT",
+            "defaultValue": 10000
+        },
+        {
+            "name": "max_steps",
+            "label":"Maximum Steps",
+            "description":"Maximum number of steps for a simulated path",
+            "type": "INT",
+            "defaultValue": 1
+        },
+        {
+            "name": "random_state",
+            "label": "Random Seed",
+            "description":"Seed for Random Number Generator",
+            "type": "INT",
+            "defaultValue": 1234
+        }
+
+    ],
+
+    // The field "resourceKeys" holds a list of keys that allows to limit the number
+    // of concurrent executions and activities triggered by this recipe.
+    //
+    // Administrators can configure the limit per resource key in the Administration > Settings > Flow build
+    // screen.
+
+    "resourceKeys": []
+
+}

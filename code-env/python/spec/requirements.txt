@@ -1,0 +1,2 @@
+pychattr==0.2.1
+markov-model-attribution==0.42
