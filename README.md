@@ -16,7 +16,7 @@ Examples of a few possible chains:
 1. A Custom Googles Dataiku > 2. The Customer Send Us An Email
 1. A Custom Googles Dataiku > 2. The Customer Visits the Website > 3. The Customer Googles A Competitor
 
-The Markov Chain will tell us the probability that a customer who has just visited the website is about to send us an email. 
+The Markov Chain will calculate us the probability that a customer who has just visited the website is about to send us an email. 
 It will calculate a probability like this for every possible combination of a Stating Point and a Next Step.
 
 
